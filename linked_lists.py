@@ -29,6 +29,18 @@ class LinkedList:
             self.pointer = self.pointer.next
             self.insert(ind - 1, node)
 
+    # For hash table implementation
+    def insert_at_end(self, node):
+        if self.head is None:
+            self.head = node
+            self.pointer = self.head
+        if not(self.pointer.next is None):
+            self.pointer = self.pointer.next
+            self.insert_at_end(node)
+        else:
+            self.pointer.next = node
+            self.pointer = self.head
+
     # Gets value at index (For strict LinkedList imp)
     def access(self, ind):
         if self.head is None:

@@ -9,6 +9,7 @@ class LinkedList:
     def __init__(self):
         self.head = None
         self.pointer = None
+
     def insert(self, ind, node):
         if ind == 0:
             if self.pointer is None:
@@ -27,7 +28,10 @@ class LinkedList:
         else:
             self.pointer = self.pointer.next
             self.insert(ind - 1, node)
+
     def access(self, ind):
+        if self.head is None:
+            raise Exception("LinkedList empty, access failed")
         if (ind == 0) and (self.pointer is not None):
             val = self.pointer.val
             self.pointer = self.head
@@ -37,6 +41,8 @@ class LinkedList:
             return self.access(ind - 1)
 
     def remove(self, ind):
+        if self.head is None:
+            raise Exception("LinkedList is empty, remove failed")            
         if ind == 0:
             self.head = self.head.next
         elif ind == 1:
@@ -48,15 +54,51 @@ class LinkedList:
             self.pointer = self.pointer.next
             self.remove(ind - 1)
 
-node_1 = Node('a')
-node_2 = Node('b')
-node_3 = Node('c')
-node_4 = Node('d')
+"""
+    Tests
+        Access on empty - exception
+        Remove on empty - Exception
+        Insert out of bounds - Exception
+        Access out of bounds - Exception
+        Remove out of bounds - Exception
+        Insert on empty - OK
+        Insert at front - OK
+        Insert at back - OK
+        Insert somewhere in list - OK
+        Remove front - OK
+        Remove back - OK
+        Remove somewhere in middle - OK
+        Access front - OK
+        Access back - OK
+        Access somewhere in middle - OK
+"""
+def test_access_empty():
+    llist = LinkedList()
+    try:
+        llist.access()
+        return 0
+    except Exception:
+        return 1
 
-llist = LinkedList()
-llist.insert(0, node_2)
-llist.insert(1, node_3)
-llist.insert(0, node_1)
-print(llist.head)
-llist.remove(1)
-print(llist.head)
+def test_remove_empty():
+    llist = LinkedList()
+    try:
+        llist.remove(1)
+        return 0
+    except:
+        return 1        
+
+def tests():
+    if test_access_empty():
+        print("Access on empty : Passed")
+    else:
+        print("Access on empty : Failed")
+    if test_remove_empty():
+        print("Remove on empty : Passed")
+    else:
+        print("Remove on empty : Failed")
+        
+def main():
+    tests()
+
+main()

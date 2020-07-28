@@ -42,9 +42,9 @@ class LinkedList:
             return self.access(ind - 1)
 
     # For hash table implementation
-    def search(self, key):
+    def access_by_key(self, key):
         if self.head is None:
-            raise Exception("LinkedList is empty, search for {} failed".format(val))
+            raise Exception("LinkedList is empty, access_by_key for {} failed".format(val))
         if self.pointer is None:
             self.pointer = self.head
             raise Exception("{} not in LinkedList".format(key)) 
@@ -54,13 +54,14 @@ class LinkedList:
             return val 
         else:
             self.pointer = self.pointer.next
-            self.search(key)
+            self.access_by_key(key)
 
     def remove(self, ind):
         if self.head is None:
             raise Exception("LinkedList is empty, remove failed")            
         if ind == 0:
             self.head = self.head.next
+            self.pointer = self.head
         elif ind == 1:
             tmp = self.pointer.next
             self.pointer.next = self.pointer.next.next
@@ -69,6 +70,26 @@ class LinkedList:
         else:
             self.pointer = self.pointer.next
             self.remove(ind - 1)
+
+    # For hash table implementation
+    def remove_by_key(self, key):
+        if self.head is None:
+            raise Exception("LinkedList is empty, remove failed")
+        if self.pointer.val[0] == key:
+            self.head = self.head.next
+            self.pointer = self.head
+        elif not(self.pointer.next is None):
+            if self.pointer.next.val[0] == key:
+                tmp = self.pointer.next
+                self.pointer.next = self.pointer.next.next
+                tmp.next = None
+                self.pointer = self.head
+            else:
+                self.pointer = self.pointer.next
+                self.remove_by_key(key)
+        else:
+            raise Exception("{} not in LinkedList, remove_by_key failed".format(key))
+            
 
 """
     Tests

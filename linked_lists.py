@@ -29,6 +29,7 @@ class LinkedList:
             self.pointer = self.pointer.next
             self.insert(ind - 1, node)
 
+    # Gets value at index (For strict LinkedList imp)
     def access(self, ind):
         if self.head is None:
             raise Exception("LinkedList empty, access failed")
@@ -39,6 +40,21 @@ class LinkedList:
         else:
             self.pointer = self.pointer.next
             return self.access(ind - 1)
+
+    # For hash table implementation
+    def search(self, key):
+        if self.head is None:
+            raise Exception("LinkedList is empty, search for {} failed".format(val))
+        if self.pointer is None:
+            self.pointer = self.head
+            raise Exception("{} not in LinkedList".format(key)) 
+        if self.pointer.val[0] == key:
+            val = self.pointer.val[1]
+            self.pointer = self.head
+            return val 
+        else:
+            self.pointer = self.pointer.next
+            self.search(key)
 
     def remove(self, ind):
         if self.head is None:

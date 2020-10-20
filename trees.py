@@ -15,6 +15,26 @@ class Tree:
     def __repr__(self):
         return "Tree({}, {}, {})".format(self.left, self.root, self.right) 
 
+    def binary_search(self, val):
+        """
+        Assumes ordered as binary search tree
+        """
+        if self.root == None:
+            raise Exception("Value has not been found")
+        elif self.root.val == val:
+            return self.root.val
+        elif self.root.val > val:
+            if self.has_right():
+                return(self.right.binary_search(val))
+            else:
+                raise Exception("Value has not been found")
+        else:
+            if self.has_left():
+                return(self.left.binary_search(val))
+            else:
+                raise Exception("Value has not been found")
+
+
     def has_left(self):
         if self.left is None:
             return False
@@ -102,17 +122,10 @@ def main():
     val_3 = 3
     tree = Tree()
     tree.insert(val_1)
-    print(tree.search(val_1))
-    print(tree.search(val_2))
-    print(tree)
-    print(tree.delete(val_1))
-    print(tree)
     tree.insert(val_2)
-    tree.insert(val_1)
     print(tree)
-    tree.insert(val_3)
-    print(tree)
-    tree.delete(val_1)
-    print(tree)
+    print(tree.binary_search(val_1))
+    print(tree.binary_search(val_3))
+
 
 main()
